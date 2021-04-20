@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const squares = document.querySelectorAll(".grid div");
+  const result = document.querySelector("#result");
+  const displayCurrentPlayer = document.querySelector("#current-player");
   //  all combinations of winners:
   const winningArrays = [
     [0, 1, 2, 3],
@@ -71,12 +74,34 @@ document.addEventListener("DOMContentLoaded", () => {
     [12, 19, 26, 33],
     [13, 20, 27, 34],
   ];
-  const squares = document.querySelectorAll(".grid div");
-  const result = document.querySelector("#result");
-  const displayCurrentPlayer = document.querySelector("#current-player");
   let currentPlayer = 1;
   // display current player counter
+  function checkWinner() {
+    for (let idx = 0; idx < winningArrays.length; idx++) {
+      const square1 = squares[winningArrays[idx][0]];
+      const square2 = squares[winningArrays[idx][1]];
+      const square3 = squares[winningArrays[idx][2]];
+      const square4 = squares[winningArrays[idx][3]];
+      if (
+        square1.classList.contains("player-one") &&
+        square2.classList.contains("player-one") &&
+        square3.classList.contains("player-one") &&
+        square4.classList.contains("player-one")
+      ) {
+        result.innerHTML = "Player One Wins!";
+      } else if (
+        square1.classList.contains("player-two") &&
+        square2.classList.contains("player-two") &&
+        square3.classList.contains("player-two") &&
+        square4.classList.contains("player-two")
+      ) {
+        result.innerHTML = "Player Two Wins!";
+      }
+    }
+  }
   for (let i = 0; i < squares.length; i++) {
+    // check for winner function checkBoard
+    // - manipulate DOM upon clicking div
     squares[i].onclick = () => {
       if (
         squares[i + 7].classList.contains("taken") &&
@@ -93,12 +118,9 @@ document.addEventListener("DOMContentLoaded", () => {
           currentPlayer = 1;
           displayCurrentPlayer.innerHTML = currentPlayer;
         }
+      checkWinner();
     };
   }
 });
 
-// - manipulate DOM upon clicking div
-
-// check for winner function checkBoard
-
-//  reset
+//  reset button
