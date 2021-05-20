@@ -796,3 +796,98 @@ assertEqual(
   "should filter blackshoes"
 );
 */
+
+var currentInventory = [
+  {
+    name: "Brunello Cucinelli",
+    shoes: [
+      { name: "tasselled black low-top lace-up", price: 1000 },
+      { name: "tasselled green low-top lace-up", price: 1100 },
+      { name: "plain beige suede moccasin", price: 950 },
+      { name: "plain olive suede moccasin", price: 1050 },
+    ],
+  },
+  {
+    name: "Gucci",
+    shoes: [
+      { name: "red leather laced sneakers", price: 800 },
+      { name: "black leather laced sneakers", price: 900 },
+    ],
+  },
+];
+
+var expectedResult = [
+  {
+    nameWords: ["tasselled", "black", "low-top", "lace-up"],
+    targetWordIndex: 3,
+  },
+  {
+    nameWords: ["tasselled", "green", "low-top", "lace-up"],
+    targetWordIndex: 3,
+  },
+  {
+    nameWords: ["red", "leather", "laced", "sneakers"],
+    targetWordIndex: 2,
+  },
+  {
+    nameWords: ["black", "leather", "laced", "sneakers"],
+    targetWordIndex: 2,
+  },
+];
+
+// create everything for this problem, functions, assertion function, and test cases
+// call your function "generateLaceDetails", and let it take the inventory as its parameter
+function generateLaceDetails(inventory) {
+  // create result array
+  let result = [];
+  // iterate over current inventory
+  for (let i = 0; i < inventory.length; i++) {
+    let currentDesigner = inventory[i];
+    for (let j = 0; j < currentDesigner.shoes.length; j++) {
+      let currentShoe = currentDesigner.shoes[j];
+      // if shoes array has lace in it
+      if (hasLace(currentShoe)) {
+        let resultObj = {};
+        // assign nameWords property to the result array and assign a value to it which contains an array of all name words
+        resultObj.nameWords = currentShoe.name.split(" ");
+        // get the index : call to getWordIndex and assign to "targetWordIndex" property
+        resultObj.targetWordIndex = getWordIndex(currentShoe);
+        result.push(resultObj);
+      }
+    }
+  }
+  console.log(result);
+  return result;
+}
+function hasLace(shoesArray) {
+  let nameOfShoe = shoesArray.name;
+  return nameOfShoe.indexOf("lace") !== -1;
+}
+
+function getWordIndex(shoesArray) {
+  let shoesArrayCopy = shoesArray.name.split(" ");
+  for (let k = 0; k < shoesArrayCopy.length; k++) {
+    if (shoesArrayCopy[k].indexOf("lace") !== -1) {
+      return k;
+    }
+  }
+}
+
+function assertEqual(actual, expected, testName) {
+  if (actual === expected) {
+    console.log(`passed`);
+  } else {
+    console.log(
+      `FAILED ${testName} Expected [${expected}] but got "${actual}"`
+    );
+  }
+}
+
+let laceDetailsActual = JSON.stringify(generateLaceDetails(currentInventory));
+let laceDetailExpected = JSON.stringify(expectedResult);
+
+assertEqual(
+  laceDetailsActual,
+  laceDetailExpected,
+  "should return names with lace and which word contains lace"
+);
