@@ -795,7 +795,7 @@ assertEqual(
   expectedBlackShoesOutput,
   "should filter blackshoes"
 );
-*/
+
 
 var currentInventory = [
   {
@@ -891,3 +891,107 @@ assertEqual(
   laceDetailExpected,
   "should return names with lace and which word contains lace"
 );
+
+
+// Skeleton
+
+// FUNCTION DEFINITION(S)
+function findMaxRepeatCountInWord(word) {
+  // Break up individual word into individual letters.
+  let countObj = {};
+  let highestCharCount = 0;
+  const splitLetters = word.split("");
+  // Count the instances of each letter, loop over the array
+  for (let i = 0; i < splitLetters.length; i++) {
+    let currentLetter = splitLetters[i];
+    if (countObj[currentLetter] === undefined) {
+      countObj[currentLetter] = 1;
+    } else {
+      countObj[currentLetter]++;
+    }
+  }
+  for (const char in countObj) {
+    // console.log("countObj[char]", countObj[char]);
+    if (countObj[char] > highestCharCount) {
+      highestCharCount = countObj[char];
+    }
+  }
+  console.log("countObj", countObj);
+  console.log(highestCharCount);
+  return highestCharCount;
+  // Iterate all the counts and find the highest
+  // Return this word's max repeat count
+}
+
+function findFirstWordWithMostRepeatedChars(text) {
+  var maxRepeatCountOverall = 0;
+  var wordWithMaxRepeatCount = "";
+
+  // Break up input text into words (space-delimited).
+  let splitWord = text.split(" ");
+  console.log("splitWord", splitWord);
+  // For each word...
+  for (let j = 0; j < splitWord.length; j++) {
+    var repeatCountForWord = findMaxRepeatCountInWord(splitWord[j]);
+    // If that max repeat count is higher than the overall max repeat count, then
+    if (maxRepeatCountOverall < repeatCountForWord) {
+      // update maxRepeatCountOverall
+      maxRepeatCountOverall = repeatCountForWord;
+      // update wordWithMaxRepeatCount
+      wordWithMaxRepeatCount = splitWord[j];
+    } else if (maxRepeatCountOverall === repeatCountForWord) {
+      continue;
+    }
+  }
+  console.log(wordWithMaxRepeatCount);
+  return wordWithMaxRepeatCount;
+}
+
+// ASSERTION FUNCTION(S) TO BE USED
+function assertEqual(actual, expected, testName) {
+  if (actual === expected) {
+    console.log(`passed`);
+  } else {
+    console.log(
+      `FAILED ${testName} Expected [${expected}] but got "${actual}"`
+    );
+  }
+}
+
+// TESTS CASES
+let input = "i passed my exam are you not entertained";
+let actual = findFirstWordWithMostRepeatedChars(input);
+let expected = "entertained";
+
+assertEqual(actual, expected, "Should return word with most repeated letters");
+
+let input1 = "connect four";
+let actual1 = findFirstWordWithMostRepeatedChars(input1);
+let expected1 = "connect";
+
+assertEqual(
+  actual1,
+  expected1,
+  "Should return word with most repeated letters"
+);
+
+let input2 = "kettle corn laptop mouse sassy tables king";
+let actual2 = findFirstWordWithMostRepeatedChars(input2);
+let expected2 = "sassy";
+
+assertEqual(
+  actual2,
+  expected2,
+  "Should return word with most repeated letters"
+);
+
+let input3 = "kettle shorts screen pop";
+let actual3 = findFirstWordWithMostRepeatedChars(input3);
+let expected3 = "kettle";
+
+assertEqual(
+  actual3,
+  expected3,
+  "Should return word with most repeated letters"
+);
+*/
