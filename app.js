@@ -994,4 +994,108 @@ assertEqual(
   expected3,
   "Should return word with most repeated letters"
 );
+
+
+// this is a constructor function, we will use it to create new instances of our cars
+function Car(color, type) {
+  this.color = color;
+  this.type = type;
+  this.gas = 12;
+}
+
+// below are methods that we have attached to the car's PROTOTYPE chain
+Car.prototype.drive = function () {
+  this.gas -= 1;
+};
+
+Car.prototype.paintJob = function (color) {
+  this.color = color;
+};
+
+// now we can generate a new instance of Car using the constructor function as follows:
+var myCar = new Car("blue", "sedan");
+console.log("myCar:", myCar);
+
+function Car(color, type) {
+  // var this = {};
+  this.color = color;
+  this.type = type;
+  this.gas = 12;
+  // return this;
+}
+
+myCar.drive();
+console.log("myCar after driving once:", myCar);
+
+function renderPhoneNumber(numbers) {
+  return (
+    "(" +
+    numbers[0] +
+    numbers[1] +
+    numbers[2] +
+    ") " +
+    numbers[3] +
+    numbers[4] +
+    numbers[5] +
+    "-" +
+    numbers[6] +
+    numbers[7] +
+    numbers[8] +
+    numbers[9]
+  );
+}
+
+// Skeleton
+
+// FUNCTION DEFINITION(S)
+function PhoneNumberFormatter(numbers) {
+  this.numbers = numbers;
+}
+
+PhoneNumberFormatter.prototype.render = function () {
+  var string = "";
+  // get area code
+  // parenthesize
+  string += this.parenthesize(this.getAreaCode());
+  // add space
+  string += " ";
+  // get exchange code
+  string += this.getExchangeCode();
+  // add hyphen
+  string += "-";
+  // get line number
+  string += this.getLineNumber();
+  return string;
+};
+
+PhoneNumberFormatter.prototype.getAreaCode = function () {
+  return this.slice(0, 3);
+};
+
+PhoneNumberFormatter.prototype.getExchangeCode = function () {
+  return this.slice(3, 6);
+};
+
+PhoneNumberFormatter.prototype.getLineNumber = function () {
+  return this.slice(6, 10);
+};
+
+PhoneNumberFormatter.prototype.parenthesize = function (string) {
+  return "(" + string + ")";
+};
+
+PhoneNumberFormatter.prototype.slice = function (start, end) {
+  return this.numbers.slice(start, end).join("");
+};
+
+// create a new instance of phone number formatter
+
+var formatter = new PhoneNumberFormatter([1, 1, 1, 8, 6, 7, 5, 3, 0, 9]);
+console.log(formatter);
+// test individual methods as we go
+// let lineNumber = formatter.slice(6, 10);
+// console.log(lineNumber);
+
+var formattedNumber = formatter.render();
+console.log(formattedNumber); // (111) 867-5309
 */
