@@ -613,7 +613,7 @@ assertEqual(
   "should make a flat list of the inventory"
 );
 
-*/
+
 
 var currentInventory = [
   {
@@ -708,3 +708,91 @@ assertEqual(
   expected1,
   "should return average cost of shoes per designer"
 );
+
+
+
+var currentInventory = [
+  {
+    name: "Brunello Cucinelli",
+    shoes: [
+      { name: "tasselled black low-top lace-up", price: 1000 },
+      { name: "tasselled green low-top lace-up", price: 1100 },
+      { name: "plain beige suede moccasin", price: 950 },
+      { name: "plain olive suede moccasin", price: 1050 },
+    ],
+  },
+  {
+    name: "Gucci",
+    shoes: [
+      { name: "red leather laced sneakers", price: 800 },
+      { name: "black leather laced sneakers", price: 900 },
+    ],
+  },
+];
+
+// find all shoes with black in name
+// filter the shoes and return them in a flat list
+// Brunello Cucinelli, tasselled black low-top lace-up, 1000\n
+// Gucci, black leather laced sneakers, 900\n
+function listAllBlackShoes(inventory) {
+  // create flatList variable with empty string
+  let flatList = "";
+  // iterate over inventory array
+  for (let i = 0; i < inventory.length; i++) {
+    let currentDesigner = inventory[i];
+    // add designer name to string
+    // call to findblackshoes and add to string
+    flatList +=
+      currentDesigner.name +
+      ", " +
+      findBlackShoes(currentDesigner.shoes) +
+      "\n";
+  }
+  console.log(flatList);
+  return flatList;
+}
+
+//Create helper functions if needed
+function findBlackShoes(shoesArray) {
+  // create empty string
+  let blackShoe = "";
+  //iterate over array of objects
+  for (let i = 0; i < shoesArray.length; i++) {
+    let currentShoe = shoesArray[i];
+    // if string contains "black" add name and price to new string
+    if (currentShoe.name.includes("black")) {
+      blackShoe += currentShoe.name + ", " + currentShoe.price;
+    }
+  }
+
+  console.log(blackShoe);
+  return blackShoe;
+  // return string
+}
+
+// var flatList = "First line\nSecond Line\nThird Line\n";
+// console.log(flatList);
+
+function assertEqual(actual, expected, testName) {
+  if (actual === expected) {
+    console.log(`passed`);
+  } else {
+    console.log(
+      `FAILED [${testName}] Expected [${expected}] but got "${actual}"`
+    );
+  }
+}
+
+let actualBlackShoesOutput = listAllBlackShoes(currentInventory);
+// let actualBlackShoesOutput = JSON.stringify(
+//   listAllBlackShoes(currentInventory)
+// );
+
+let expectedBlackShoesOutput =
+  "Brunello Cucinelli, tasselled black low-top lace-up, 1000\nGucci, black leather laced sneakers, 900\n";
+assertEqual(
+  actualBlackShoesOutput,
+  expectedBlackShoesOutput,
+  "should filter blackshoes"
+);
+*/
