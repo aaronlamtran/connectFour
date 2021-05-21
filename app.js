@@ -1099,3 +1099,121 @@ console.log(formatter);
 var formattedNumber = formatter.render();
 console.log(formattedNumber); // (111) 867-5309
 */
+
+// Skeleton
+// find the longest single word palindrome with an input phrase (string)
+// only contain letters no symbols punctuation or numbers
+// case insensitive
+// if multiple palindromes of equal length return the last one
+// FUNCTION DEFINITION(S)
+function findLongestPalindrome(sentence) {
+  // split sentence into words
+  let palindromeArray = [];
+  let arrayOfWords = sentence.split(" ");
+  // iterate words and collect the palindromes
+  for (let i = 0; i < arrayOfWords.length; i++) {
+    let currentWord = arrayOfWords[i];
+    if (isPalindrome(currentWord)) {
+      palindromeArray.unshift(currentWord);
+    }
+  }
+
+  // sort the list of palindromes by word length
+  palindromeArray.sort(function (a, b) {
+    return b.length - a.length;
+  });
+
+  if (palindromeArray[0] === undefined) {
+    return "no palindromes";
+    console.log("no palindromes");
+  } else {
+    return palindromeArray[0];
+  }
+  // return the largest item in the sorted list
+}
+
+function reverseString(string) {
+  // split word into array of string
+  let reverseLetters = string.toLowerCase().split("");
+  let reverseWord = "";
+  // create empty array to push letters into while iterating in reverse
+  for (let i = reverseLetters.length - 1; i >= 0; i--) {
+    reverseWord += reverseLetters[i];
+  }
+
+  return reverseWord;
+  // return string
+}
+
+function isPalindrome(word) {
+  // hint: you can detect palindromes by comparing a string to its reverse
+
+  // return word === reverseString(word);
+  return word.toLowerCase() === reverseString(word.toLowerCase());
+}
+
+function sortAscendingByLength(a, b) {
+  if (a.length > b.length) {
+    return 1;
+  } else if (a.length < b.length) {
+    return -1;
+  }
+  return 0;
+}
+
+// ASSERTION FUNCTION(S) TO BE USED
+function assertEqual(actual, expected, testName) {
+  if (actual === expected) {
+    console.log(`passed`);
+  } else {
+    console.log(
+      `FAILED ${testName} Expected [${expected}] but got "${actual}"`
+    );
+  }
+}
+
+// TESTS CASES
+// palindrome
+let actual = findLongestPalindrome("racecar sas");
+let expected = "racecar";
+assertEqual(actual, expected, "should return palindrome of longest length");
+
+// not palindrome input
+let actual1 = findLongestPalindrome("cool");
+let expected1 = "no palindromes";
+assertEqual(
+  actual1,
+  expected1,
+  `if no palindromes in sentence, should return: "no palindromes"`
+);
+
+// should be case insensitive
+let actual2 = findLongestPalindrome("Yep CoOl KayAk");
+let expected2 = "KayAk";
+assertEqual(actual2, expected2, "test for case insensitivity");
+
+// test for case insensitivity of is palindrome
+let actual3 = isPalindrome("kayAk");
+let expected3 = true;
+assertEqual(
+  actual3,
+  expected3,
+  "test for case insensitivty of isPalindrome function "
+);
+
+// test multiple palindromes of equal length return the last one
+let actual4 = findLongestPalindrome("wow tenet solos");
+let expected4 = "solos";
+assertEqual(
+  actual4,
+  expected4,
+  "test for return of last palindrome of equal length"
+);
+
+let actual5 = findLongestPalindrome("sagas tenet solos radar rotor");
+let expected5 = "rotor";
+assertEqual(
+  actual5,
+  expected5,
+  "test for return of last palindrome of equal length"
+);
